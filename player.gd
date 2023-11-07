@@ -26,6 +26,10 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
+func _input(event):
+	if event.is_action_pressed("ui_cancel"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		neck.rotate_y(-event.relative.x * SENSITIVITY)
@@ -33,6 +37,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		light.rotate_x(-event.relative.y * SENSITIVITY)
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
 		light.rotation.x = clamp(light.rotation.x, deg_to_rad(-40), deg_to_rad(60))
+
 
 func _physics_process(delta):
 	# Add the gravity.
