@@ -1,0 +1,64 @@
+[gd_scene load_steps=8 format=3 uid="uid://t64lxv7i3qq7"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_6y5mb"]
+[ext_resource type="PackedScene" uid="uid://buuqh0c4fg4kj" path="res://map.tscn" id="2_h5erq"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_j70n7"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_0pk87"]
+sky_material = SubResource("ProceduralSkyMaterial_j70n7")
+
+[sub_resource type="Environment" id="Environment_f0tfv"]
+background_mode = 2
+sky = SubResource("Sky_0pk87")
+ambient_light_color = Color(0.415686, 0.0431373, 0.0705882, 1)
+ambient_light_sky_contribution = 0.0
+ambient_light_energy = 0.02
+tonemap_mode = 2
+glow_enabled = true
+fog_enabled = true
+fog_light_color = Color(0.415686, 0.0431373, 0.0705882, 1)
+fog_light_energy = 0.02
+fog_density = 0.1
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_msrwy"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_31cqy"]
+radius = 0.37293
+
+[node name="Node" type="Node"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.0975827, 0.485531, -0.868756, 0, 0.872922, 0.48786, 0.995227, 0.0476067, -0.0851821, 0, 0, 0)
+visible = false
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_f0tfv")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+script = ExtResource("1_6y5mb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_msrwy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_31cqy")
+
+[node name="neck" type="Node3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.58668, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Player/neck"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.111792, 0)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Player/neck"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.106471, 0)
+light_color = Color(0.976471, 0.956863, 0.996078, 1)
+spot_range = 15.1153
+spot_angle = 53.7695
+
+[node name="Map" parent="." instance=ExtResource("2_h5erq")]

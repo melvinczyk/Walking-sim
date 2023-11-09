@@ -25,4 +25,10 @@ This is the main room inside of the structure
 
 ## Future plans
 
-My next goal for this project is to implement a smoother player control system with the ability to sprint and jump at the same time. Mainly reworking the current movement system to smooth out the controls and to make the inertia function more like in real life.
+ Mainly reworking the current movement system to smooth out the controls and to make the inertia function more like in real life.
+
+ ## Update log
+
+ - Added function to run and jump at same time
+ - Added new layers to test map
+ - reworked environment

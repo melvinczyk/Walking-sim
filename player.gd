@@ -2,13 +2,13 @@ extends CharacterBody3D
 
 
 const JUMP_VELOCITY = 4.5
-const SENSITIVITY = 0.001
+const SENSITIVITY = 0.003
 
 const BOB_FREQ = 2.0
 const BOB_AMP = 0.08
 var t_bob = 0.0
 
-var speed = 0.0
+var speed
 const WALK_SPEED = 5.0
 const SPRINT = 8.0
 
@@ -30,13 +30,13 @@ func _input(event):
 	if event.is_action_pressed("ui_cancel"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
-func _unhandled_input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent):
 	if event is InputEventMouseMotion:
 		neck.rotate_y(-event.relative.x * SENSITIVITY)
 		camera.rotate_x(-event.relative.y * SENSITIVITY)
 		light.rotate_x(-event.relative.y * SENSITIVITY)
-		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
-		light.rotation.x = clamp(light.rotation.x, deg_to_rad(-40), deg_to_rad(60))
+		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-90), deg_to_rad(60))
+		light.rotation.x = clamp(light.rotation.x, deg_to_rad(-90), deg_to_rad(60))
 
 
 func _physics_process(delta):
@@ -48,7 +48,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 	
-	if Input.is_action_just_pressed("sprint"):
+	if Input.is_action_pressed("sprint"):
 		speed = SPRINT
 	else:
 		speed = WALK_SPEED
